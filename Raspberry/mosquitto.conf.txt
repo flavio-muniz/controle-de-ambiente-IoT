@@ -1,0 +1,25 @@
+# Configuração Básica do Mosquitto Broker para o Projeto IoT
+
+# Local onde as mensagens persistentes (Retain) são salvas
+persistence true
+persistence_location /var/lib/mosquitto/
+
+# Arquivo de Log (útil para debug se algo der errado)
+log_dest file /var/log/mosquitto/mosquitto.log
+
+# -----------------------------------------------------------------
+# LISTENERS
+# -----------------------------------------------------------------
+
+# Porta padrão MQTT (1883).
+# O listener precisa ser declarado explicitamente para aceitar conexões externas (do ESP32)
+# Se não colocar isso, ele só aceita conexões locais (localhost)
+listener 1883
+
+# -----------------------------------------------------------------
+# SEGURANÇA
+# -----------------------------------------------------------------
+
+# Permitir conexões anônimas (sem usuário/senha).
+# Mude para 'false' se configurar um arquivo de senhas (password_file)
+allow_anonymous true

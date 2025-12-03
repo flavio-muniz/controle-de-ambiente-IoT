@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Painel de Controle Ambiental — Dark Robust</title>
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="timer-bar"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="title">
+        <h2>Painel de Controle Ambiental</h2>
+        <small>Última leitura: <span id="last-update">--:--:--</span></small>
+      </div>
+      <div id="status" class="status-badge status-err">Inicializando...</div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card" style="border-top:3px solid var(--danger)">
+        <div class="kpi-title">Temperatura (ºC)</div>
+        <div class="kpi-val" id="val-temp">-- <span class="kpi-unit">°C</span></div>
+      </div>
+      <div class="kpi-card" style="border-top:3px solid var(--accent)">
+        <div class="kpi-title">Umidade (%)</div>
+        <div class="kpi-val" id="val-hum">-- <span class="kpi-unit">%</span></div>
+      </div>
+      <div class="kpi-card" style="border-top:3px solid var(--warn)">
+        <div class="kpi-title">Luminosidade</div>
+        <div class="kpi-val" id="val-lux">-- <span class="kpi-unit">Lux</span></div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div style="font-weight:600;color:var(--muted)">Histórico</div>
+          <select id="points-selector" class="opt-select">
+            <option value="50">50 pts</option>
+            <option value="100">100 pts</option>
+            <option value="200" selected>200 pts</option>
+            <option value="0">Todos</option>
+          </select>
+        </div>
+
+        <div class="chart-canvas">
+          <canvas id="mainChart"></canvas>
+        </div>
+        <div class="note" id="scale-note">Escala Y ajusta automaticamente</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="live-panel">
+          <div class="live-head">
+            <div>
+              <strong>Últimas leituras</strong>
+              <div style="color:var(--muted);font-size:0.85rem">Painel ao vivo</div>
+            </div>
+            <div>
+              <a id="live-button" class="button-link" href="#" target="_blank" rel="noopener">Dashboard ao vivo</a>
+            </div>
+          </div>
+
+          <div class="mini-scroll" style="margin-top:6px">
+            <table class="mini-table" id="mini-table">
+              <thead><tr><th>Hora</th><th>Umid</th><th>Luz</th><th>Temp</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="sheet-row" aria-hidden="false" style="margin-top:12px">
+            <a id="sheet-edit" class="sheet-link" href="#" target="_blank" rel="noopener" title="Abrir planilha no Google Sheets">
+              <span class="sheet-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)">
+                  <rect x="3" y="4" width="14" height="16" rx="2" ry="2"></rect>
+                  <path d="M7 8h6M7 12h6M7 16h6"></path>
+                  <path d="M21 7v10"></path>
+                </svg>
+              </span>
+              Abrir planilha
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="app.js"></script>
+</body>
+</html>

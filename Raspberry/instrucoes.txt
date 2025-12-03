@@ -1,0 +1,60 @@
+===================================================
+PASSO A PASSO: CONFIGURAÇÃO DA RASPBERRY PI
+===================================================
+
+1. ATUALIZAR O SISTEMA
+   sudo apt update && sudo apt upgrade -y
+
+2. INSTALAR O BROKER MQTT (MOSQUITTO)
+   sudo apt install mosquitto mosquitto-clients -y
+
+   # Aplicar a configuração personalizada
+   # (Copia o arquivo mosquitto.conf deste repositório para a pasta do sistema)
+   sudo cp mosquitto.conf /etc/mosquitto/mosquitto.conf
+   
+   # Reiniciar para aplicar
+   sudo systemctl restart mosquitto
+   
+   # Verificar se está rodando
+   sudo systemctl status mosquitto
+
+3. PREPARAR O AMBIENTE PYTHON (LOGGER)
+   sudo apt install python3-pip -y
+   
+   # Instalar bibliotecas globais (necessário para rodar como serviço)
+   sudo pip3 install paho-mqtt requests --break-system-packages
+
+4. CONFIGURAR O SCRIPT DE LOG COMO SERVIÇO (AUTO-INIT)
+   # Copie o script para a pasta home
+   cp logger.py /home/pi/logger.py
+   
+   # Copie o arquivo de serviço para o systemd
+   sudo cp iot-logger.service /etc/systemd/system/iot-logger.service
+   
+   # Habilitar e Iniciar
+   sudo systemctl daemon-reload
+   sudo systemctl enable iot-logger.service
+   sudo systemctl start iot-logger.service
+
+5. INSTALAR NODE-RED E DASHBOARD
+   # Instalação via script oficial
+   bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
+   
+   # Instalar o Dashboard
+   cd ~/.node-red
+   npm install node-red-dashboard
+   
+   # Reiniciar Node-RED
+   node-red-restart
+
+===================================================
+COMANDOS ÚTEIS DE DEBUG
+===================================================
+Ver logs do Mosquitto:
+   sudo tail -f /var/log/mosquitto/mosquitto.log
+
+Ver se o serviço Python está rodando:
+   sudo systemctl status iot-logger.service
+
+Ver logs do script Python:
+   sudo journalctl -u iot-logger.service -f

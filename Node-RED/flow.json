@@ -1,0 +1,333 @@
+[
+    {
+        "id": "8a068f3cf02142c3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ed33f27d7772bf27",
+        "type": "mqtt in",
+        "z": "8a068f3cf02142c3",
+        "name": "",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "af1297356f31c27e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 520,
+        "wires": [
+            [
+                "74e5eb4601c6f65f"
+            ]
+        ]
+    },
+    {
+        "id": "74e5eb4601c6f65f",
+        "type": "debug",
+        "z": "8a068f3cf02142c3",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 260,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "8a9803c26ed52a07",
+        "type": "mqtt in",
+        "z": "8a068f3cf02142c3",
+        "name": "",
+        "topic": "projeto/iot/telemetry",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "9a0183d5798f542a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "940548f65b9a86a1"
+            ]
+        ]
+    },
+    {
+        "id": "940548f65b9a86a1",
+        "type": "json",
+        "z": "8a068f3cf02142c3",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "68e6a179d48bca93",
+                "bb0e0a5c9f890870"
+            ]
+        ]
+    },
+    {
+        "id": "68e6a179d48bca93",
+        "type": "function",
+        "z": "8a068f3cf02142c3",
+        "name": "format_for_dashboard",
+        "func": "let p = msg.payload || {};\nlet t = Number(p.temperature);\nlet h = Number(p.humidity);\nlet lraw = Number(p.light_raw);\nlet lpct = Number(p.light_pct);\n\nlet m1 = { payload: t, topic: \"temperature\" };\nlet m2 = { payload: h, topic: \"humidity\" };\nlet m3 = { payload: lpct, topic: \"light_pct\" };\nreturn [m1, m2, m3];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 240,
+        "wires": [
+            [
+                "61cf23d92b0cc32f"
+            ],
+            [
+                "b2f07ea36aa2e996"
+            ],
+            [
+                "96bb418fba55a69d"
+            ]
+        ]
+    },
+    {
+        "id": "b2f07ea36aa2e996",
+        "type": "ui_chart",
+        "z": "8a068f3cf02142c3",
+        "name": "umidade",
+        "group": "c7318e5ed89b8844",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Umidade",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 540,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "96bb418fba55a69d",
+        "type": "ui_gauge",
+        "z": "8a068f3cf02142c3",
+        "name": "luminosidade",
+        "group": "c7318e5ed89b8844",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Luminosidade",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 530,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "bb0e0a5c9f890870",
+        "type": "debug",
+        "z": "8a068f3cf02142c3",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 200,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "61cf23d92b0cc32f",
+        "type": "ui_chart",
+        "z": "8a068f3cf02142c3",
+        "name": "Temperatura",
+        "group": "c7318e5ed89b8844",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura (ºC)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 530,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "af1297356f31c27e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "127.0.0.1",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9a0183d5798f542a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c7318e5ed89b8844",
+        "type": "ui_group",
+        "name": "Medições",
+        "tab": "daf8a973425c64b2",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "daf8a973425c64b2",
+        "type": "ui_tab",
+        "name": "Projeto IoT",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "fefb8ff3151b10cd",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
