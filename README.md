@@ -1257,10 +1257,9 @@ mqtt connect returned=1 state=0   # exemplo de saída de debug adicionada
 | Node-RED não inicia dashboard       | Falta `node-red-dashboard` | Instalar via npm                                |
 | Mosquitto recusando conexão         | Listener apenas em ::1     | Alterar `listener 1883` e reiniciar             |
 
-## 📁 Estrutura Recomendada do Repositório
-```
 ## 📁 Estrutura do Repositório
-```bash
+```
+
 /ESP-32
     platformio.ini
     /src
