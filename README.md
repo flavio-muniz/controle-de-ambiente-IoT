@@ -1213,7 +1213,17 @@ sudo systemctl status mosquitto
 sudo ss -tlnp | grep 1883
 sudo journalctl -u mosquitto -f
 ```
-* Testar publicação/subscrição
+* Alteração do Hostname da Raspberry para comunicação mDNS:
+```
+sudo raspi-config
+```
+1. Vá em **1 System Options** -> **S4 Hostname**.
+2. Apague `raspberrypi` e digite o novo nome (ex: `central-iot`, `servidor-casa`).
+   > **Regra:** Use apenas letras de **a-z**, números **0-9** e hífen **-**. Nada de espaços ou caracteres especiais.
+3. Selecione **OK** e depois **Finish**.
+4. O sistema vai pedir para reiniciar (**Reboot**). Aceite.
+   
+* Testar publicação/subscrição:
 ```
 mosquitto_sub -t 'projeto/iot/telemetry' -v
 mosquitto_pub -t 'projeto/iot/telemetry' -m '{"temperature":22}' -d
@@ -1285,4 +1295,7 @@ README.md
 ## 📜 Licença
 MIT — Livre para uso acadêmico.
 
+## 👥 Colaboradores
 
+| [<img src="https://avatars.githubusercontent.com/u/106926790?v=4" width=115><br><sub>Caio Hirata</sub>](https://github.com/Kal-0) | [<img src="https://avatars.githubusercontent.com/u/116359369?v=4" width=115><br><sub>Flávio Muniz</sub>](https://github.com/flavio-muniz) | [<img src="https://avatars.githubusercontent.com/u/105346791?v=4" width=115><br><sub>João Lafetá</sub>](https://github.com/joaohlafeta) | [<img src="https://avatars.githubusercontent.com/u/111138996?v=4" width=115><br><sub>Pedro Coelho</sub>](https://github.com/pedro-coelho-dr) | [<img src="https://avatars.githubusercontent.com/u/103130662?v=4" width=115><br><sub>Yara Rodrigues</sub>](https://github.com/Yara-R) |
+| :---: | :---: | :---: | :---: | :---: |
