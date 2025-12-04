@@ -1260,25 +1260,25 @@ mqtt connect returned=1 state=0   # exemplo de saída de debug adicionada
 ## 📁 Estrutura do Repositório
 ```
 
-/ESP-32
-    platformio.ini
-    /src
-        main.cpp       # Firmware do ESP32
-
 /Node-RED
     flow.json          # Backup do fluxo Node-RED
 
 /apps_script
     rotacionarDadosMensal.gs
 
-/Raspberry
-    instrucoes.txt
-    mosquitto.conf.txt # Configuração do Broker
+/esp-32
+    platformio.ini
+    /src
+        main.cpp       # Firmware do ESP32
 
-/Front                 # Código do Frontend (Netlify)
+/front-end             # Código do Frontend (Netlify)
     index.html
     style.css
     app.js
+
+/raspberry-pi
+    instrucoes.txt
+    mosquitto.conf.txt # Configuração do Broker
 
 README.md
 ```
